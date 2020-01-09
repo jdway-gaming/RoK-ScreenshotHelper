@@ -18,7 +18,8 @@ def get_args():
                         default='C:\\Users\\jdway\\Nox_share\\ImageShare\\Images\\check-{}.png')
     parser.add_argument('--is_r4', action='store_true', help='Either is R4 or not')
     parser.add_argument('--is_member', action='store_true', help='Either is the member of the alliance or not')
-    parser.add_argument('--last_num', type=int, default=12, help='Will skip after this index (start with 0')
+    parser.add_argument('--last_num', type=int, default=12, help='Will stop after this index')
+    parser.add_argument('--start_num', type=int, default=0, help='Will start from this index (start with 0')
     return parser.parse_args()
 
 
@@ -76,8 +77,9 @@ def main(args):
     st = time()
     for y in range(0, 6):
         for x in range(2):
-            print('[{}/{}] Recording player information...'.format(y * 2 + x, 12))
-            if y * x + x > args.last_num:
+            cur_index = y * 2 + x
+            print('[{}/{}] Recording player information...'.format(cur_index, 12))
+            if cur_index > args.last_num or args.start_num > cur_index:
                 continue
             # ---- move to person icon
             coord_x = start_point[0] + x * stride_x
